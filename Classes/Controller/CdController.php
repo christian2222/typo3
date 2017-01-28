@@ -172,7 +172,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
     
     public function initializeAddTitleAction() {
-  //  	$this->setTypeConverterConfigurationForImageUpload('title');
+    	$this->setTypeConverterConfigurationForImageUpload('titel');
     }
     
     /**
@@ -203,7 +203,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$newFile = $storage->addFile(
     			$tmpfileName,
     			$folder,
-    			$newFilename,\TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME,FALSE
+    			$newFilename,\TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE,FALSE
     			);
     	
     	// TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference
@@ -223,8 +223,8 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
     	$uploadConfiguration = [
     			UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS => 'mp3',
-    			UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => '1:/',
-    			UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_CONFLICT_MODE => DuplicationBehaviour::REPLACE
+    			UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => '1:/'
+    		//	UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_CONFLICT_MODE => \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
     	];
     	/** @var PropertyMappingConfiguration $newExampleConfiguration */
     	$newExampleConfiguration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
