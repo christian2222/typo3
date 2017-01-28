@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-01-09T21:08:16Z" product-name="cmcd">
+		<header/>
+		<body>
+			<trans-unit id="cd_name.description">
+				<source>cdName</source>
+			</trans-unit>
+			<trans-unit id="ersch_jahr.description">
+				<source>erschJahr</source>
+			</trans-unit>
+			<trans-unit id="artists.description">
+				<source>artists</source>
+			</trans-unit>
+			<trans-unit id="titles.description">
+				<source>titles</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

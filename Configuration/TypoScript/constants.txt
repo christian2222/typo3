@@ -1,0 +1,15 @@
+
+plugin.tx_cmcd_cdmanager {
+	view {
+		# cat=plugin.tx_cmcd_cdmanager/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:cmcd/Resources/Private/Templates/
+		# cat=plugin.tx_cmcd_cdmanager/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:cmcd/Resources/Private/Partials/
+		# cat=plugin.tx_cmcd_cdmanager/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:cmcd/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_cmcd_cdmanager//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}

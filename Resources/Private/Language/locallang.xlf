@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-01-09T21:08:16Z" product-name="cmcd">
+		<header/>
+		<body>
+			<trans-unit id="tx_cmcd_domain_model_libary">
+				<source>Libary</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_libary.bib_name">
+				<source>Bib Name</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_libary.cds">
+				<source>Cds</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_libary.interpreten">
+				<source>Interpreten</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_cd">
+				<source>Cd</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_cd.cd_name">
+				<source>Cd Name</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_cd.ersch_jahr">
+				<source>Ersch Jahr</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_cd.artists">
+				<source>Artists</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_cd.titles">
+				<source>Titles</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_kuenstler">
+				<source>Kuenstler</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_kuenstler.ku_name">
+				<source>Ku Name</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_kuenstler.geb_jahr">
+				<source>Geb Jahr</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_titel">
+				<source>Titel</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_titel.t_name">
+				<source>T Name</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_titel.laenge">
+				<source>Laenge</source>
+			</trans-unit>
+			<trans-unit id="tx_cmcd_domain_model_titel.mp3">
+				<source>Mp3</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

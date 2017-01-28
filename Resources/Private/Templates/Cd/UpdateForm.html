@@ -1,0 +1,29 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+
+<div class="container">
+
+    <f:form action="update" controller="Cd" object="{cd}" name="cd" arguments="{libary:lib, cd:cd}" additionalAttributes="{role: 'form'}">
+
+        <div class="form-group">
+            <label>Cd title</label>
+            <f:form.textfield property="cdName" class="form-control" />
+        </div>
+
+         <div class="form-group">
+            <label>Erscheinungsjahr</label>
+            <f:form.textfield property="erschJahr" class="form-control" />
+        </div>
+
+        <div class="form-group">
+        <f:form.select options="{kuenstler}" optionLabelField="kuName" property="artists" size="20" multiple="1" class="form-control" />
+        </div>
+
+        <!--<td><f:link.action action="showTitles" controller="Cd" arguments="{libary:lib, cd:cd}" class="btn btn-primary">Show titles</f:link.action></td> -->
+        <f:form.submit value="Update Cd" additionalAttributes="{libary:lib}" class="btn btn-primary" />
+        <f:link.action action="edit" controller="Libary" arguments="{libary:lib, cd:cd}" class="btn btn-primary">Zur&uuml;ck zu {lib.bibName}</f:link.action>
+
+
+
+    </f:form>
+
+</div>

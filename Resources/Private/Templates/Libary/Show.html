@@ -1,0 +1,17 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+<div class="container">
+    <h1>Show content of libary</h1>
+    <dl class="dl-horizontal">
+        <dt>Libary name:</dt>
+        <dd>{lib.bibName}</dd>
+    </dl>
+    <f:if condition="{lib.cds}">
+        <ul>
+            <f:for each="{lib.cds}" as="cd">
+            <li>
+                {cd.cdName},{cd.erschJahr}
+            </li>
+            </f:for>
+        </ul>
+    </f:if>
+</div>

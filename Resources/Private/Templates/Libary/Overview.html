@@ -1,0 +1,28 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+
+<h1>&Uuml;berblick &uuml;ber Libary {lib.bibName}:</h1>
+<ul>
+    <f:for each="{cds}" as="cd">
+        <li>{cd.cdName},{cd.erschJahr}<br />
+            <ul>
+                <li>Titel</li>
+                <ol>
+
+                    <f:for each="{cd.titles}" as="titel">
+                        <li>{titel.tName},{titel.laenge}</li>
+                    </f:for>
+                </ol>
+                <li>K&uuml;nstler</li>
+                <ul>
+
+                    <f:for each="{cd.artists}" as="kuenstler">
+                        <li>{kuenstler.kuName},{kuenstler.gebJahr}</li>
+                    </f:for>
+                </ul>
+            </ul>
+
+        </li>
+    </f:for>
+</ul>
+<f:link.action action="edit" controller="Libary" class="btn btn-primary" arguments="{libary:lib,cd:cd}">Zur&uuml;ck zur Cd-Liste</f:link.action>
+<f:link.action action="listKuenstler" controller="Cd" class="btn btn-primary" arguments="{libary:lib}">Weiter zu K&uuml;nstler</f:link.action>

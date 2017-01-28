@@ -1,0 +1,47 @@
+
+<!--
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+<h1>Listing for Cd of libary <strong>{lib.bibName}</strong></h1>
+
+<f:flashMessages />
+
+<!--<table  class="tx_cmcd">
+	<table>
+	<tr>
+		<th><f:translate key="tx_cmcd_domain_model_cd.cd_name" /></th>
+		<th><f:translate key="tx_cmcd_domain_model_cd.ersch_jahr" /></th>
+		<th> </th>
+		<th> </th>
+	</tr>
+
+	<f:for each="{lib.cds}" as="cd">
+		<tr>
+			<td><f:link.action action="show" controller="Cd" arguments="{libary:lib, cd : cd}" class="btn btn-xs"> {cd.cdName}</f:link.action></td>
+			<td>{cd.erschJahr}</td>
+			<td><f:link.action action="updateForm" controller="Cd" arguments="{libary:lib, cd : cd}" class="btn btn-xs">Edit</f:link.action></td>
+			<td><f:link.action action="deleteConfirm" controller="Cd" arguments="{libary:lib, cd : cd}" class="btn btn-xs">Delete</f:link.action></td>
+			<td><f:link.action action="showTitles" controller="Cd" arguments="{libary:lib, cd : cd}" class="btn btn-xs">Titel anzeigen</f:link.action></td>
+		</tr>
+	</f:for>
+</table>
+
+<f:link.action action="addCd" controller="Cd" arguments="{libary:lib , cd:cd}" class="btn btn-primary">New Cd</f:link.action>
+<f:link.action action="listKuenstler" controller="Cd" arguments="{libary:lib}" class="btn btn-primary">K&uuml;nstler</f:link.action>
+<f:link.action action="overview" controller="Libary" arguments="{libary:lib}" class="btn btn-primary">&Uuml;berblick</f:link.action>
+<f:link.action action="list" controller="Libary" arguments="{libary:lib}" class="btn btn-primary">Libaries</f:link.action>
+</f:section>
+
+-->

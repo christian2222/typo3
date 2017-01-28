@@ -1,0 +1,21 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+
+<div class="container">
+
+    <h2>L&ouml;sche Cd {cd.cdName} von Bibliothek {lib.bibName}</h2>
+
+        Wollen Sie sicher folgende Cd löschen<br />
+        <br />
+        <div class="form-group">
+            <label>Cd title: {cd.cdName}</label>
+        </div>
+
+        <div class="form-group">
+            <label>Erscheinungsjahr: {cd.erschJahr}</label>
+        </div>
+
+        <f:link.action action="edit" controller="Libary" class="btn btn-danger" arguments="{cd:cd,libary:lib}">Nein, bitte nicht</f:link.action>
+        <f:link.action action="delete" controller="Cd" class="btn btn-success" arguments="{cd:cd,libary:lib}">Ja, l&ouml;schen</f:link.action>
+
+
+</div>

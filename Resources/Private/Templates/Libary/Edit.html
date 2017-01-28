@@ -1,0 +1,45 @@
+<!-- <html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"> -->
+
+<div class="container">
+
+    <f:form action="edit" object="{libary}" name="lib" additionalAttributes="{role: 'form'}">
+
+        <div class="form-group">
+            <h2>Bilbliothek <strong>{lib.bibName}</strong></h2>
+        </div>
+            <f:if condition="{lib.cds}">
+            <table class="tx_cmcd" >
+
+                <tr>
+                    <th>Cd</th>
+                    <th>Escheinungsjahr</th>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
+
+                <f:for each="{lib.cds}" as="cd">
+                    <tr>
+                        <td>{cd.cdName}</td>
+                        <td>{cd.erschJahr}</td>
+                        <td><f:link.action action="updateForm" controller="Cd" arguments="{libary:lib, cd : cd}" class="btn btn-primary btn-xs">Bearbeiten</f:link.action></td>
+                        <td><f:link.action action="deleteConfirm" controller="Cd" arguments="{libary:lib, cd : cd}" class="btn btn-primary btn-xs">L&ouml;schen</f:link.action></td>
+                        <td><f:link.action action="showTitles" controller="Cd" arguments="{libary:lib, cd : cd}" class="btn btn-primary btn-xs">Titel anzeigen</f:link.action></td>
+                    </tr>
+                </f:for>
+            </table>
+            </f:if>
+
+        <br />
+<!--
+
+        <f:link.action action="list" controller="Cd" arguments="{libary:lib,cd:cd}" class="btn btn-primary">List Cds</f:link.action>
+
+-->     <f:link.action action="list" controller="Libary" class="btn btn-primary">Bibliotheken</f:link.action>
+        <f:link.action action="listKuenstler" controller="Cd" arguments="{libary:lib}" class="btn btn-primary">K&uuml;nstler</f:link.action>
+        <f:link.action action="overview" controller="Libary" class="btn btn-primary" arguments="{libary:lib}">&Uuml;berblick</f:link.action>
+        <f:link.action controller="Cd" action="addCd" arguments="{libary:lib,cd:cd}" class="btn btn-primary">Neue Cd</f:link.action>
+
+    </f:form>
+
+</div>

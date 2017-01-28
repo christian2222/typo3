@@ -1,0 +1,33 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+
+<h1>Titel der Cd: {cd.cdName} aus Libary {lib.bibName}</h1>
+<ol>
+    <f:for each="{cd.titles}" as="atitle">
+        <li>{atitle.tName},{atitle.laenge}
+            <f:link.action action="deleteConfirmTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">l&ouml;schen</f:link.action>
+            <f:link.action action="editTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">bearbeiten</f:link.action>
+
+        </li>
+    </f:for>
+</ol>
+
+
+    <f:form action="addTitle" object="{titel}" method="post" enctype="multipart/form-data" name="titel" arguments="{libary:lib,cd:cd,titel:titel}" additionalAttributes="{role:'form'}">
+        <div class="form-group">
+            <label>Titel Name</label>
+            <f:form.textfield property="tName" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>L&auml;nge</label>
+            <f:form.textfield property="laenge" class="form-control" />
+        </div>
+
+        <div class="form-group">
+         	Datei hochladen
+        	<input name="datei" type="file" accept="text/*" property="mp3"> 
+        </div>
+        <f:form.submit value="Add title" class="btn btn-primary" />
+        <f:link.action action="edit" controller="Libary" arguments="{libary:lib,cd:cd}" class="btn btn-primary">Zur&uuml;ck zur Cd-Liste</f:link.action>
+
+    </f:form>

@@ -1,0 +1,13 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+<h2>Bibliothek hinzuf&uuml;gen</h2>
+<f:form action="create" object="{libary}" name="libary" additionalAttributes="{role:'form'}">
+    <div class="form-group">
+        <label>Bibliotheksname</label>
+        <f:form.textfield property="bibName" class="form-control" />
+    </div>
+
+
+
+    <f:form.submit value="Bibliothek hinzufuegen" class="btn btn-primary" />
+    <f:link.action action="list" class="btn btn-primary">Zur&uuml;ck zur Bibliotheksliste</f:link.action>
+</f:form>

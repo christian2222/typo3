@@ -1,0 +1,30 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+
+<h1>Künstler der Libary {lib.bibName}:</h1>
+<ul>
+    <f:for each="{kuenstler}" as="kunst">
+        <li>{kunst.kuName},{kunst.gebJahr}
+
+          <!--  <td><f:link.action action="deleteConfirm" arguments="{cd : cd}" class="btn btn-primary">Delete</f:link.action></td> -->
+            <f:link.action action="deleteConfirmKuenstler" arguments="{kunst:kunst,libary:lib}" class="btn btn-xs">Delete</f:link.action>
+            <f:link.action action="editKuenstler" arguments="{kunst:kunst,libary:lib}" class="btn btn-xs">Edit</f:link.action>
+        </li>
+    </f:for>
+</ul>
+
+<f:form action="addKuenstler" object="{kuenstler}" name="kuenstler" arguments="{libary:lib, kuenstler:kunst}" additionalAttributes="{role:'form'}">
+    <div class="form-group">
+        <label>Kuenstler Name</label>
+        <f:form.textfield property="kuName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Geburtsjahr</label>
+        <f:form.textfield property="gebJahr" class="form-control" />
+    </div>
+
+
+    <f:form.submit value="Kuenstler hunzufuegen" additionalAttributes="{libary:lib}" class="btn btn-primary" />
+    <f:link.action action="edit" controller="Libary" arguments="{libary:lib, cd:cd}" class="btn btn-primary">Zur&uuml;ck zur Cd-Liste</f:link.action>
+
+</f:form>

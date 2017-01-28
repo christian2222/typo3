@@ -1,0 +1,17 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+
+<div class="container">
+
+    <h1>Bibliothek l&ouml;schen</h1>
+
+    Sind Sie sicher folgende <br />
+    <div class="form-group">
+        <label>Bibliothek <strong>{lib.bibName}</strong>< zu l&ouml;schen/label>
+    </div>
+
+
+    <f:link.action action="list" class="btn btn-danger">Nein, bitte nicht</f:link.action>
+    <f:link.action action="delete" class="btn btn-success" arguments="{libary:lib}">Ja, l&ouml;schen</f:link.action>
+
+
+</div>

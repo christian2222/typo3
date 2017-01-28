@@ -1,0 +1,43 @@
+
+<!--
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+-->
+
+
+<!-- <f:flashMessages /> -->
+
+<!--<table  class="tx_cmcd" -->
+<div class="container">
+<h2>Bibliotheksliste</h2>
+<table>
+	<tr>
+		<!-- <th><f:translate key="tx_cmcd_domain_model_libary.bib_name" /></th> -->
+		<th>Name</th>
+<!--		<th> </th> -->
+		<th></th>
+	</tr>
+
+	<f:for each="{libaries}" as="libary">
+		<tr>
+			<td><f:link.action action="edit" arguments="{libary : libary}"> {libary.bibName}</f:link.action></td>
+<!--			<td><f:link.action action="edit" arguments="{libary : libary}" class="btn btn-xs">Edit</f:link.action></td> -->
+			<td><f:link.action action="deleteConfirm" arguments="{libary : libary}" class="btn btn-primary btn-xs">L&ouml;schen</f:link.action></td>
+		</tr>
+	</f:for>
+</table>
+<br />
+<f:link.action action="new" class="btn btn-primary">Neue Bibliothek</f:link.action>
+<!--</f:section>--></div>

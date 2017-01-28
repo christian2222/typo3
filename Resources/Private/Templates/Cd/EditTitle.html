@@ -1,0 +1,30 @@
+<html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
+
+Titel der Cd {cd.cdName} der Bibliothek {lib:bibName} bearbeiten
+
+
+<div class="container">
+
+    <f:form action="updateTitle" object="{title}" name="titel" arguments="{libary:lib,cd:cd,titel:title}" additionalAttributes="{role: 'form'}">
+
+        <div class="form-group">
+            <label>Song title</label>
+            <f:form.textfield property="tName" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>L&auml;nge</label>
+            <f:form.textfield property="laenge" class="form-control" />
+        </div>
+        
+
+
+
+        <f:form.submit value="Titel aendern" additionalAttributes="{libary:lib,cd:cd,title:title}" class="btn btn-primary" />
+        <f:link.action action="showTitles" arguments="{libary:lib, cd:cd,titel:title}" class="btn btn-primary">Zur&uuml;ck zu Titel</f:link.action>
+
+    </f:form>
+
+
+
+</div>
