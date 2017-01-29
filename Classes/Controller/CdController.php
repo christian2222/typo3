@@ -164,7 +164,9 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$reference = $this->uploadFile($basename, $tmpname,$this->ensureDirectory('cmcdPlugin' . '/' . $libary->getBibName() . '/' . $cd->getCdName()));
     	$titel->setTName($basename);
     	$titel->setLaenge($tmpname);
+    	// why is setMp3 not enough?
     	$titel->setMp3($reference);
+    	//$titel->setOriginalResource($reference);
         $cd->addTitle($titel);
         $libary->addCd($cd);
         $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\LibaryRepository')->update($libary);
@@ -209,6 +211,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	// TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference
     	$fileReference = $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Model\\FileReference');
     	$fileReference->setFile($newFile);
+    	//$fileReference->setOriginalResource($newFile);
     	
     	
     	return $fileReference;
@@ -223,16 +226,21 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
     	$uploadConfiguration = [
     			UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS => 'mp3',
-    			UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => '1:/'
-    		//	UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_CONFLICT_MODE => \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
+    			// CONFIGURATION_UPLOAD-FOLDER does not change it's content!
+    			UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => '1:/user_upload',
+    			UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_CONFLICT_MODE => \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
     	];
     	/** @var PropertyMappingConfiguration $newExampleConfiguration */
     	$newExampleConfiguration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
+    	// convert the mp3 Property into a fileReference using the previous defined configuration
     	$newExampleConfiguration->forProperty('mp3')
     	->setTypeConverterOptions(
     			'CDpackage\\Cmcd\\PropertyTypeconverter\\UploadedFileReferenceConverter',
     			$uploadConfiguration
     			);
+    	// why is the $newExampleConfiguration thrown away and does not convert anything?
+    	// should we return the result of the conversion and not just throw away the configuration?
+    	// how do we start the conversion? Where is the configuration be used?
     }
     
     protected function checkAllowedFilename($filename) {
