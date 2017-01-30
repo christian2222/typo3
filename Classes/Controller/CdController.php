@@ -149,27 +149,38 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('title', $titel);
     }
     
-    /**
-     * @param \CDpackage\Cmcd\Domain\Model\Cd $cd
-     * @param \CDpackage\Cmcd\Domain\Model\Titel $titel
-     */
+	/**
+	 * adds a title to the given $cd of the given $libary
+	 * 
+	 * @param \CDpackage\Cmcd\Domain\Model\Libary $libary
+	 * @param \CDpackage\Cmcd\Domain\Model\Cd $cd
+	 * @param \CDpackage\Cmcd\Domain\Model\Titel $titel
+	 */ 
     public function addTitleAction(\CDpackage\Cmcd\Domain\Model\Libary $libary, \CDpackage\Cmcd\Domain\Model\Cd $cd,
         \CDpackage\Cmcd\Domain\Model\Titel $titel)
     {
-    	
+    	// extract the $file- and $tmpname from the $-FILES array
     	$filename = $_FILES["datei"]["name"];
     	// $filename === "" ~> no file selected
     	$basename = basename($filename);
     	$tmpname = $_FILES["datei"]["tmp_name"];
+    	// upload the file into directory 1:/cmcdPlugin/[libaryName]/[cdName]/$basename
     	$reference = $this->uploadFile($basename, $tmpname,$this->ensureDirectory('cmcdPlugin' . '/' . $libary->getBibName() . '/' . $cd->getCdName()));
+    	// set name and title depenent on the $_FILES array
     	$titel->setTName($basename);
     	$titel->setLaenge($tmpname);
+    	// set the reference
     	// why is setMp3 not enough?
     	$titel->setMp3($reference);
+    	// deprecated:
     	//$titel->setOriginalResource($reference);
+    	// refresh title of cd
         $cd->addTitle($titel);
+        // refresh cd of libary
         $libary->addCd($cd);
+        // update libary
         $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\LibaryRepository')->update($libary);
+        // redirect to showTitles with given $cd and $libary
         $this->redirect('showTitles','Cd',NULL,array('libary' => $libary,'cd' => $cd));
     }
     
@@ -177,31 +188,37 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$this->setTypeConverterConfigurationForImageUpload('titel');
     }
     
-    /**
-     * not in controller
-     * 
-     * @param string $uploadPath
-     * @param string $filePath
-     * 
-     * @return FileReference
-     */
+	/**
+	 * uploads a file with the $tmpname into the $folder with the $newFilename. It returns a filereference on the new file
+	 * 
+	 * @param string $newFilename
+	 * @param string $tmpfileName
+	 * @param \TYPO3\CMS\COre\Resource\Folder $folder
+	 * @return \CDpackage\Cmcd\Domain\Model\FileReference $fileReference
+	 */ 
     protected function uploadFile($newFilename,$tmpfileName,$folder) {
     	/**
     	 * if (!GeneralUtility::verifyFilenameAgainstDenyPattern($uploadInfo['name'])) {
     	 * throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430); }
     	 */
     	
+    	// get the resource factory
     	$resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
+    	// get the storage
     	$storage = $resourceFactory->getDefaultStorage();
-    	//$folder = $storage->getRootLevelFolder();
-    	// go to subfolder (should exist!)
-    	//$hasSubfolder = $storage->hasFolder('songs'); // boolean
-    	//$folder = $folder->getSubfolder('songs');
+    		/* only previously used code, deprecated
+    		//$folder = $storage->getRootLevelFolder();
+    		// go to subfolder (should exist!)
+    		//$hasSubfolder = $storage->hasFolder('songs'); // boolean
+    		//$folder = $folder->getSubfolder('songs');
     	
-    	// create a new subfolder and turn into
-    	//$folder = $folder->createFolder('subfolder');	
-    	// $storage->getFolder('1:songs/') does not work
+    		// create a new subfolder and turn into
+    		//$folder = $folder->createFolder('subfolder');	
+    		// $storage->getFolder('1:songs/') does not work
+			*/  
   
+    	// create a new file inside the $folder of $storage. The new file is given by $tmpfileName. It's new name is $newFilename
+    	// it's replaced if it already ecists and the origin is not deleted
     	$newFile = $storage->addFile(
     			$tmpfileName,
     			$folder,
@@ -209,7 +226,9 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     			);
     	
     	// TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference
+    	// get the file reference
     	$fileReference = $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Model\\FileReference');
+    	// set it to the new file
     	$fileReference->setFile($newFile);
     	//$fileReference->setOriginalResource($newFile);
     	
@@ -218,9 +237,11 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
     
   
-
+	
     /**
-     *
+     * sets some unknown converter configuration that is not used?
+     * 
+     * @param unknown $argumentName
      */
     protected function setTypeConverterConfigurationForImageUpload($argumentName)
     {
@@ -240,38 +261,53 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     			);
     	// why is the $newExampleConfiguration thrown away and does not convert anything?
     	// should we return the result of the conversion and not just throw away the configuration?
-    	// how do we start the conversion? Where is the configuration be used?
+    	// how do we start the conversion? Where is the configuration used?
     }
     
+    /**
+     * checks for an allowed $filename
+     * 
+     * @param string $filename
+     * @return boolean
+     */
     protected function checkAllowedFilename($filename) {
+    	// allow the file (be optimistic)
     	$allowed = TRUE;
-    	
+    	// deny php files	
     	$allowed = $allowed && GeneralUtility::verifyFilenameAgainstDenyPattern($filename);
-    	
+    	// choose mp3 files
     	$allowed = $allowed &&  ( $this->endsWith($filename, '.mp3') || $this->endsWith($filename, '.MP3') );
-    	
+    	// check for forbidden characters like '/' in the filename
     	$allowed = $allowed && (!$this->hasForbiddenCharacters($filename));
     	
+    	// result of all passed tests
     	return $allowed;
     	
     }
     
     /**
-     * 
-     * @param Folder $directory
-     * @return \TYPO3\CMS\Core\Resource\Folder
-     * 
      * recursively creates/walks down a folder structure from rootlevel folder
      * folders are separated by '/'
      * usage
      * $folder = $this->ensureDirectory('test/test1/test2/test3');
+     *      * 
+     * @param Folder $directory
+     * @return \TYPO3\CMS\Core\Resource\Folder
+     * 
      */
     protected function ensureDirectory($directory) {
+    	// get the resource factory
     	$resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
+    	// get the default storage
     	$storage = $resourceFactory->getDefaultStorage();
+    	// get the root directory of fileadmin
     	$folder = $storage->getRootLevelFolder();
+    	// extract the names of the path/tofile into an array [path, to, file]
     	$dirArray = explode('/',$directory);
+    	// walk the "directories" down (inside the array)
     	foreach ($dirArray as $dir) {
+    		// if the folder exists go into
+    		// otherwise create it and go into it
     		if($folder->hasFolder($dir)) {
     			$folder = $folder->getSubfolder($dir);
     		} else {
@@ -279,17 +315,33 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     		}
     	}
     	
+    	// return the current folder we are in (ie. fileadmin/path/to/file)
     	return $folder;
     	
     }
     
+    /**
+     * checks the $string for forbidden characters like '/' for filenames
+     * 
+     * @param string $string
+     * @return boolean
+     */
     protected function hasForbiddenCharacters($string) {
+    	// count the occurences of '/'
     	$occurence = substr_count($string, '/');
     	
     	return ($occurence != 0);
     	
     }
     
+    /**
+     * checks wether $haystack ends with $needle
+     * TODO: correct the algortihm
+     * 
+     * @param string $haystack
+     * @param string $needle
+     * @return boolean
+     */
     protected function endsWith($haystack, $needle)
     {
     	$length = strlen($needle);
@@ -297,7 +349,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     		return true;
     	}
     
-    	return (substr($haystack, -$length) === $needle);
+    	return (substr($haystack, -(strlen($haystack)-$length) ) === $needle);
     }
     
     /**
