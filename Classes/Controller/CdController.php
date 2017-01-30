@@ -336,7 +336,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     
     /**
      * checks wether $haystack ends with $needle
-     * TODO: correct the algortihm
+     * 
      * 
      * @param string $haystack
      * @param string $needle
@@ -346,10 +346,13 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
     	$length = strlen($needle);
     	if ($length == 0) {
+    		// $needle is the empty word
     		return true;
     	}
-    
-    	return (substr($haystack, -(strlen($haystack)-$length) ) === $needle);
+    	// find the (possible) starting position of the $needle at the end of $haystack
+   		$startPos =  strlen($haystack)-$length;
+   		// cut from starting oosition and compare the result with $needle
+    	return (substr($haystack, -$startPos) === $needle);
     }
     
     /**
