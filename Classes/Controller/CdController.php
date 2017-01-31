@@ -171,6 +171,12 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$titel->setLaenge($tmpname);
     	// set the reference
     	// why is setMp3 not enough?
+    	// I think we've done tha same as in https://forum.typo3.org/index.php/t/206859/
+    	// but we don't get the FileReference mp3 in the title?
+    	// Problem: fields [tablenames] and {table_local] in [sys_file_reference] are empty
+    	// additionally are [cruser_id] and [sorting_foreign] both 1
+    	// I actually don't dare to change the sql tables manually; i'm afraid it would break typo3
+    	// completly or in a way I couldn't fix by myself
     	$titel->setMp3($reference);
     	// deprecated:
     	//$titel->setOriginalResource($reference);
@@ -185,6 +191,11 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
     
     public function initializeAddTitleAction() {
+    	// only setting the configuration can't be enough
+    	// I think we need to call the UploadedFileReferenceConverter->convertFrom() method,
+    	// but I'm not sure which parameters we should use for it; especially what $source and $targetType are
+    	// seems like $source could be the $_FILES array, but why is this a double array like
+    	// $source['submittedFile']['resourcePointer'] ?
     	$this->setTypeConverterConfigurationForImageUpload('titel');
     }
     

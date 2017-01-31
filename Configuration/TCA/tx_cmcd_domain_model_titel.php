@@ -176,10 +176,16 @@ return array(
 						)
 					),
 					'maxitems' => 1,
-						'forign_match_fields' => [
+						'foreign_match_fields' => [
 						'fieldname' => 'mp3',
-						'tablename' => 'tx_cmcd_domain_model_title',
-						'table_local' =>'sys_file'
+						'tablenames' => 'tx_cmcd_domain_model_title',
+						'table_local' =>'sys_file',
+						// crashed backend upload somehow; I don't know how to repair it
+						// can't even upload files in the normal way anymore...?
+						// I have added the following two lines because the standard user upload did the same thing, when it was working
+						// seems like [sys_file_reference] table does not change anymore by upload from frontend or backend
+						'sorting_foreign' => '1',
+						'cruser_id' => '1'
 						],
 						
 				)
