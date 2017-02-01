@@ -159,18 +159,25 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function addTitleAction(\CDpackage\Cmcd\Domain\Model\Libary $libary, \CDpackage\Cmcd\Domain\Model\Cd $cd,
         \CDpackage\Cmcd\Domain\Model\Titel $titel)
     {
-    	// extract the $file- and $tmpname from the $-FILES array
-    	$filename = $_FILES["datei"]["name"];
-    	// $filename === "" ~> no file selected
-    	$basename = basename($filename);
-    	$tmpname = $_FILES["datei"]["tmp_name"];
-    	// upload the file into directory 1:/cmcdPlugin/[libaryName]/[cdName]/$basename
-    	$reference = $this->uploadFile($basename, $tmpname,$this->ensureDirectory('cmcdPlugin' . '/' . $libary->getBibName() . '/' . $cd->getCdName()));
-    	// set name and title depenent on the $_FILES array
-    	$titel->setTName($basename);
-    	$titel->setLaenge($tmpname);
-    	// set the reference
-    	$titel->setMp3($reference);
+    	// 'datei' is the name of the input-field
+    	if(is_uploaded_file($_FILES['datei']['tmp_name'])) {
+	    	// extract the $file- and $tmpname from the $-FILES array
+    		$filename = $_FILES["datei"]["name"];
+    		// $filename === "" ~> no file selected
+	    	$basename = basename($filename);
+    		$tmpname = $_FILES["datei"]["tmp_name"];
+    		// check for allowed file extensions
+    		if ($this->checkAllowedFilename($basename)) {
+    			;
+    			// upload the file into directory 1:/cmcdPlugin/[libaryName]/[cdName]/$basename
+    			$reference = $this->uploadFile($basename, $tmpname,$this->ensureDirectory('cmcdPlugin' . '/' . $libary->getBibName() . '/' . $cd->getCdName()));
+    			// set name and title depenent on the $_FILES array
+    			//$titel->setTName($basename);
+    			//$titel->setLaenge($tmpname);
+    			// set the reference
+    			$titel->setMp3($reference);
+    		}
+    	}
     	// refresh title of cd
         $cd->addTitle($titel);
         // refresh cd of libary
@@ -340,7 +347,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	// find the (possible) starting position of the $needle at the end of $haystack
    		$startPos =  strlen($haystack)-$length;
    		// cut from starting oosition and compare the result with $needle
-    	return (substr($haystack, -$startPos) === $needle);
+    	return (substr($haystack, $startPos) === $needle);
     }
     
     /**

@@ -180,10 +180,7 @@ return array(
 						'fieldname' => 'mp3',
 						'tablenames' => 'tx_cmcd_domain_model_titel',
 						'table_local' =>'sys_file',
-						// crashed backend upload somehow; I don't know how to repair it
-						// can't even upload files in the normal way anymore...?
-						// I have added the following two lines because the standard user upload did the same thing, when it was working
-						// seems like [sys_file_reference] table does not change anymore by upload from frontend or backend
+						// repaired by right table name
 						'sorting_foreign' => '1',
 						'cruser_id' => '1'
 						],

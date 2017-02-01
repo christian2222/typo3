@@ -6,8 +6,8 @@
         <li>{atitle.tName},{atitle.laenge},
         <!-- {atitle.mp3},{atitle.fullMp3Name.publicUrl}, -->
          <audio controls>
-  <source src="{atitle.fullMp3Name.publicUrl}" type="audio/mpeg">
-Your browser does not support the audio element.
+  <source src="{atitle.fullMp3Name}" type="audio/mpeg">
+Ihr Browser unsterst&uuml;tzt das Format nicht
 </audio> 
             <f:link.action action="deleteConfirmTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">l&ouml;schen</f:link.action>
             <f:link.action action="editTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">bearbeiten</f:link.action>
