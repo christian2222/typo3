@@ -3,7 +3,7 @@
 <h1>Titel der Cd: {cd.cdName} aus Libary {lib.bibName}</h1>
 <ol>
     <f:for each="{cd.titles}" as="atitle">
-        <li>{atitle.tName},{atitle.laenge}
+        <li>{atitle.tName},{atitle.laenge},{atitle.mp3},{atitle.fullMp3Name.publicUrl}
             <f:link.action action="deleteConfirmTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">l&ouml;schen</f:link.action>
             <f:link.action action="editTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">bearbeiten</f:link.action>
 

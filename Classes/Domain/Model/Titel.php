@@ -26,6 +26,7 @@ namespace CDpackage\Cmcd\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Ein Titel
  */
@@ -53,6 +54,15 @@ class Titel extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $mp3 = null;
     
+  
+    public function getFullMp3Name() {
+    	if($this->mp3 === null) return null;
+    	$fileRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\FileRepository::class);
+    	// $fileRepository = $this->objectManager->get('\\TYPO3\\CMS\\Core\\Resource\\FileRepository');
+    	$fileObjects = $fileRepository->findByRelation('sys_file','uid',$this->mp3->getUid());
+    	// $this->resourceFactory->getFileObject($this->mp3->getUid())
+    	return count($fileObjects);
+    }
     /**
      * Returns the tName
      *

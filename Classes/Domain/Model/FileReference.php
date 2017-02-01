@@ -63,7 +63,6 @@ class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     public function setFile(\TYPO3\CMS\Core\Resource\File $falFile) {
     	$this->originalFileIdentifier = (int)$falFile->getUid();
-    	return $this->originalFileIdentifier;
     }
     
 }

@@ -170,16 +170,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$titel->setTName($basename);
     	$titel->setLaenge($tmpname);
     	// set the reference
-    	// why is setMp3 not enough?
-    	// I think we've done tha same as in https://forum.typo3.org/index.php/t/206859/
-    	// but we don't get the FileReference mp3 in the title?
-    	// Problem: fields [tablenames] and {table_local] in [sys_file_reference] are empty
-    	// additionally are [cruser_id] and [sorting_foreign] both 1
-    	// I actually don't dare to change the sql tables manually; i'm afraid it would break typo3
-    	// completly or in a way I couldn't fix by myself
     	$titel->setMp3($reference);
-    	// deprecated:
-    	//$titel->setOriginalResource($reference);
     	// refresh title of cd
         $cd->addTitle($titel);
         // refresh cd of libary
@@ -191,11 +182,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
     
     public function initializeAddTitleAction() {
-    	// only setting the configuration can't be enough
-    	// I think we need to call the UploadedFileReferenceConverter->convertFrom() method,
-    	// but I'm not sure which parameters we should use for it; especially what $source and $targetType are
-    	// seems like $source could be the $_FILES array, but why is this a double array like
-    	// $source['submittedFile']['resourcePointer'] ?
+    	// only setting the configuration is enough, but why?
     	$this->setTypeConverterConfigurationForImageUpload('titel');
     }
     
@@ -217,16 +204,6 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
     	// get the storage
     	$storage = $resourceFactory->getDefaultStorage();
-    		/* only previously used code, deprecated
-    		//$folder = $storage->getRootLevelFolder();
-    		// go to subfolder (should exist!)
-    		//$hasSubfolder = $storage->hasFolder('songs'); // boolean
-    		//$folder = $folder->getSubfolder('songs');
-    	
-    		// create a new subfolder and turn into
-    		//$folder = $folder->createFolder('subfolder');	
-    		// $storage->getFolder('1:songs/') does not work
-			*/  
   
     	// create a new file inside the $folder of $storage. The new file is given by $tmpfileName. It's new name is $newFilename
     	// it's replaced if it already ecists and the origin is not deleted
@@ -317,7 +294,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$dirArray = explode('/',$directory);
     	// walk the "directories" down (inside the array)
     	foreach ($dirArray as $dir) {
-    		// if the folder exists go into
+    		// if the folder exists go into it
     		// otherwise create it and go into it
     		if($folder->hasFolder($dir)) {
     			$folder = $folder->getSubfolder($dir);
