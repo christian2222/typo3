@@ -59,9 +59,10 @@ class Titel extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     	if($this->mp3 === null) return null;
     	$fileRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\FileRepository::class);
     	// $fileRepository = $this->objectManager->get('\\TYPO3\\CMS\\Core\\Resource\\FileRepository');
-    	$fileObjects = $fileRepository->findByRelation('sys_file','uid',$this->mp3->getUid());
-    	// $this->resourceFactory->getFileObject($this->mp3->getUid())
-    	return count($fileObjects);
+    	$fileIdentfier = $fileRepository->findFileReferenceByUid($this->mp3->getUid());
+    	// $this->resourceFactory->getFileObject($this->mp3->getUid//())
+  		return $fileIdentfier; 
+    	//return $this->mp3->getOriginalRecource()->getName();
     }
     /**
      * Returns the tName
