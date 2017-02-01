@@ -178,7 +178,7 @@ return array(
 					'maxitems' => 1,
 						'foreign_match_fields' => [
 						'fieldname' => 'mp3',
-						'tablenames' => 'tx_cmcd_domain_model_title',
+						'tablenames' => 'tx_cmcd_domain_model_titel',
 						'table_local' =>'sys_file',
 						// crashed backend upload somehow; I don't know how to repair it
 						// can't even upload files in the normal way anymore...?
