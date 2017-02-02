@@ -17,7 +17,7 @@ if (!defined('TYPO3_MODE')) {
 	array(
 		'Libary' => 'list,new,create,show,deleteConfirm,delete,edit,overview',
         'Cd' => 'addCd,add,list,show,updateForm,update,deleteConfirm,delete,
-                    showTitles,addTitle,deleteConfirmTitle,deleteTitle,ediTitle,updateTitle,
+                    showTitles,addTitle,deleteConfirmTitle,deleteTitle,editTitle,updateTitle,
                     addKuenstler,listKuenstler,deleteConfirmKunestler,deleteKuenstler,editKuenstler,updateKuenstler'
 
 	)
