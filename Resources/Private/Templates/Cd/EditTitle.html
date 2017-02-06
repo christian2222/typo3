@@ -1,11 +1,11 @@
 <html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 
-Titel der Cd {cd.cdName} der Bibliothek {lib:bibName} bearbeiten
+Titel der Cd {cd.cdName} der Bibliothek {lib.bibName} bearbeiten
 
 
 <div class="container">
 
-    <f:form action="updateTitle" object="{title}" name="titel" arguments="{libary:lib,cd:cd,titel:title}" additionalAttributes="{role: 'form'}">
+    <f:form action="updateTitle" object="{title}" method="post" enctype="multipart/form-data" name="titel" arguments="{libary:lib,cd:cd,titel:title}" additionalAttributes="{role: 'form'}">
 
         <div class="form-group">
             <label>Song title</label>
@@ -17,8 +17,17 @@ Titel der Cd {cd.cdName} der Bibliothek {lib:bibName} bearbeiten
             <f:form.textfield property="laenge" class="form-control" />
         </div>
         
+         <div class="form-group">
+			<audio controls>
+  			<source src="{title.fullMp3Name}" type="audio/mpeg">
+			Ihr Browser unsterst&uuml;tzt das Format nicht
+			</audio> 
+        </div>
 
-
+        <div class="form-group">
+         	Datei &uuml;berschreiben
+        	<input name="nochmal" type="file" accept="text/*" property="mp3"> 
+        </div>
 
         <f:form.submit value="Titel aendern" additionalAttributes="{libary:lib,cd:cd,title:title}" class="btn btn-primary" />
         <f:link.action action="showTitles" arguments="{libary:lib, cd:cd,titel:title}" class="btn btn-primary">Zur&uuml;ck zu Titel</f:link.action>

@@ -161,25 +161,10 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         \CDpackage\Cmcd\Domain\Model\Titel $titel)
     {
     	$mp3Saver = $this->objectManager->get('CDpackage\\Cmcd\\Services\\Mp3SavingService');
-    	// 'datei' is the name of the input-field
-    	if(is_uploaded_file($_FILES['datei']['tmp_name'])) {
-	    	// extract the $file- and $tmpname from the $-FILES array
-    		$filename = $_FILES["datei"]["name"];
-    		// $filename === "" ~> no file selected
-	    	$basename = basename($filename);
-    		$tmpname = $_FILES["datei"]["tmp_name"];
-    		// check for allowed file extensions
-    		if ($mp3Saver->checkAllowedFilename($basename)) {
-    			;
-    			// upload the file into directory 1:/cmcdPlugin/[libaryName]/[cdName]/$basename
-    			$reference = $mp3Saver->uploadFile($basename, $tmpname,$mp3Saver->ensureDirectory('cmcdPlugin' . '/' . $libary->getBibName() . '/' . $cd->getCdName()));
-    			// set name and title depenent on the $_FILES array
-    			//$titel->setTName($basename);
-    			//$titel->setLaenge($tmpname);
-    			// set the reference
-    			$titel->setMp3($reference);
-    		}
-    	}
+		
+    	$fileReference = $mp3Saver->uploadNew($libary->getBibName(),$cd->getCdName());
+    	
+    	$titel->setMp3($fileReference);
     	// refresh title of cd
         $cd->addTitle($titel);
         // refresh cd of libary
@@ -259,12 +244,12 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function editTitleAction(\CDpackage\Cmcd\Domain\Model\Libary $libary, \CDpackage\Cmcd\Domain\Model\Cd $cd,
         \CDpackage\Cmcd\Domain\Model\Titel $titel)
     {
+   	
         $this->view->assign('lib',$libary);
         $this->view->assign('cd', $cd);
         $this->view->assign('title', $titel);
     }
     
-    // funktioniert, aber unklar???
     /**
      * @param \CDpackage\Cmcd\Domain\Model\Cd $cd
      * @param \CDpackage\Cmcd\Domain\Model\Titel $titel
@@ -272,6 +257,15 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function updateTitleAction(\CDpackage\Cmcd\Domain\Model\Libary $libary, \CDpackage\Cmcd\Domain\Model\Cd $cd,
         \CDpackage\Cmcd\Domain\Model\Titel $titel)
     {
+
+    	$mp3Saver = $this->objectManager->get('CDpackage\\Cmcd\\Services\\Mp3SavingService');
+    	 
+    	$fileReference = $mp3Saver->reload($libary->getBibName(),$cd->getCdName());
+    	
+    	if($mp3Saver->hasUploaded()) {
+    		$titel->setMp3($fileReference);
+    	}
+    	
         $cd->addTitle($titel);
         $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\CdRepository')->update($cd);
         //$libary->addCd($cd);

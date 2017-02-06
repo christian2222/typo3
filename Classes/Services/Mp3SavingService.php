@@ -1,6 +1,7 @@
 <?php
 namespace CDpackage\Cmcd\Services;
 
+// toDo: simple quotations for files array
 
 use CDpackage\Cmcd\PropertyTypeConverter\UploadedFileReferenceConverter;
 use CDpackage\Cmcd\Domain\Model\Titel;
@@ -12,6 +13,74 @@ use TYPO3\CMS\Core\Resource\DuplicationBehaviour;
 
 class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
+	
+	public $uploaded = false;
+
+	public function hasUploaded() {
+		return $this->uploaded;
+	}
+	
+	
+	/**
+	 * loads the file up in a directory depending on $bibName and $cdName
+	 * 
+	 * @param string $bibName
+	 * @param string $cdName
+	 * @return \CDpackage\Cmcd\Domain\Model\FileReference|NULL
+	 */
+	public function uploadNew($bibName, $cdName) {
+		// not yet uploaded
+		$this->uploaded = false;
+		// 'datei' is the name of the input-field
+		if(is_uploaded_file($_FILES['datei']['tmp_name'])) {
+			// extract the $file- and $tmpname from the $-FILES array
+			$filename = $_FILES["datei"]["name"];
+			// $filename === "" ~> no file selected
+			$basename = basename($filename);
+			$tmpname = $_FILES["datei"]["tmp_name"];
+			// check for allowed file extensions
+			if ($this->checkAllowedFilename($basename)) {
+				;
+				// upload the file into directory 1:/cmcdPlugin/[libaryName]/[cdName]/$basename
+				$reference = $this->uploadFile($basename, $tmpname,$this->ensureDirectory('cmcdPlugin' . '/' . $bibName . '/' . $cdName) );
+				// set name and title depenent on the $_FILES array
+				//$titel->setTName($basename);
+				//$titel->setLaenge($tmpname);
+				//signal uploading success
+				$this->uploaded = true;
+				// set the reference
+				return $reference;
+			} else 
+				return NULL;
+		}
+	}
+	
+	public function reload($bibName, $cdName) {
+		// not yet uploaded
+		$this->uploaded = false;
+		// 'datei' is the name of the input-field
+		if(is_uploaded_file($_FILES['nochmal']['tmp_name'])) {
+			// extract the $file- and $tmpname from the $-FILES array
+			$filename = $_FILES["nochmal"]["name"];
+			// $filename === "" ~> no file selected
+			$basename = basename($filename);
+			$tmpname = $_FILES["nochmal"]["tmp_name"];
+			// check for allowed file extensions
+			if ($this->checkAllowedFilename($basename)) {
+				;
+				// upload the file into directory 1:/cmcdPlugin/[libaryName]/[cdName]/$basename
+				$reference = $this->uploadFile($basename, $tmpname,$this->ensureDirectory('cmcdPlugin' . '/' . $bibName . '/' . $cdName) );
+				// set name and title depenent on the $_FILES array
+				//$titel->setTName($basename);
+				//$titel->setLaenge($tmpname);
+				//signal for uploading success
+				$this->uploaded = true;
+				// set the reference
+				return $reference;
+			} else
+				return NULL;
+		}
+	}
 	
 	/**
 	 * recursively creates/walks down a folder structure from rootlevel folder
@@ -90,7 +159,7 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @param string $filename
 	 * @return boolean
 	 */
-	public function checkAllowedFilename($filename) {
+	protected function checkAllowedFilename($filename) {
 		// allow the file (be optimistic)
 		$allowed = TRUE;
 		// deny php files
@@ -113,7 +182,7 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 * @param \TYPO3\CMS\COre\Resource\Folder $folder
 	 * @return \CDpackage\Cmcd\Domain\Model\FileReference $fileReference
 	 */
-	public function uploadFile($newFilename,$tmpfileName,$folder) {
+	protected function uploadFile($newFilename,$tmpfileName,$folder) {
 		/**
 		 * if (!GeneralUtility::verifyFilenameAgainstDenyPattern($uploadInfo['name'])) {
 		 * throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430); }
