@@ -171,6 +171,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $libary->addCd($cd);
         // update libary
         $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\LibaryRepository')->update($libary);
+        unset($mp3Saver);
         // redirect to showTitles with given $cd and $libary
         $this->redirect('showTitles','Cd',NULL,array('libary' => $libary,'cd' => $cd));
     }
@@ -257,21 +258,42 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function updateTitleAction(\CDpackage\Cmcd\Domain\Model\Libary $libary, \CDpackage\Cmcd\Domain\Model\Cd $cd,
         \CDpackage\Cmcd\Domain\Model\Titel $titel)
     {
+    	
+    	/*
+    	 *    	$mp3Saver = $this->objectManager->get('CDpackage\\Cmcd\\Services\\Mp3SavingService');
+		
+    	$fileReference = $mp3Saver->uploadNew($libary->getBibName(),$cd->getCdName());
+    	
+    	$titel->setMp3($fileReference);
+    	// refresh title of cd
+        $cd->addTitle($titel);
+        // refresh cd of libary
+        $libary->addCd($cd);
+        // update libary
+        $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\LibaryRepository')->update($libary);
+        // redirect to showTitles with given $cd and $libary
+        $this->redirect('showTitles','Cd',NULL,array('libary' => $libary,'cd' => $cd));
+    	 */
 
     	$mp3Saver = $this->objectManager->get('CDpackage\\Cmcd\\Services\\Mp3SavingService');
     	 
     	$fileReference = $mp3Saver->reload($libary->getBibName(),$cd->getCdName());
+    	$titel->setLaenge($mp3Saver->getHelp());
     	
     	if($mp3Saver->hasUploaded()) {
     		$titel->setMp3($fileReference);
+    		$titel->setTName('inside if');
     	}
     	
         $cd->addTitle($titel);
-        $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\CdRepository')->update($cd);
+        $libary->addCd($cd);
+        //$this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\CdRepository')->update($cd);
         //$libary->addCd($cd);
         $this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\LibaryRepository')->update($libary);
+        unset($mp3Saver);
         $this->redirect('showTitles', 'Cd', NULL, array('libary' => $libary,'cd' => $cd));
     }
+        
     
     public function listKuenstlerAction(\CDpackage\Cmcd\Domain\Model\Libary $libary)
     {

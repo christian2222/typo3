@@ -15,9 +15,15 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 
 	
 	public $uploaded = false;
+	
+	public $help = 'help';
 
 	public function hasUploaded() {
 		return $this->uploaded;
+	}
+	
+	public function getHelp() {
+		return $this->help;
 	}
 	
 	
@@ -58,9 +64,11 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	public function reload($bibName, $cdName) {
 		// not yet uploaded
 		$this->uploaded = false;
+		$this->help = 'outside';
 		// 'datei' is the name of the input-field
 		if(is_uploaded_file($_FILES['nochmal']['tmp_name'])) {
 			// extract the $file- and $tmpname from the $-FILES array
+			$this->help = 'inside upload';
 			$filename = $_FILES["nochmal"]["name"];
 			// $filename === "" ~> no file selected
 			$basename = basename($filename);
@@ -72,6 +80,7 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				$reference = $this->uploadFile($basename, $tmpname,$this->ensureDirectory('cmcdPlugin' . '/' . $bibName . '/' . $cdName) );
 				// set name and title depenent on the $_FILES array
 				//$titel->setTName($basename);
+				$this->help = $tmpname;
 				//$titel->setLaenge($tmpname);
 				//signal for uploading success
 				$this->uploaded = true;
