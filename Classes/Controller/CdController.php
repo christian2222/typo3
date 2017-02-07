@@ -248,7 +248,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
    	
         $this->view->assign('lib',$libary);
         $this->view->assign('cd', $cd);
-        $this->view->assign('title', $titel);
+        $this->view->assign('titel', $titel);
     }
     
     /**
