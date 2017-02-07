@@ -251,6 +251,10 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('titel', $titel);
     }
     
+    public function initializeUpdateTitleAction() {
+    	$this->setTypeConverterConfigurationForImageUpload('titel');
+    }
+    
     /**
      * @param \CDpackage\Cmcd\Domain\Model\Cd $cd
      * @param \CDpackage\Cmcd\Domain\Model\Titel $titel
