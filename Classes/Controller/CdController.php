@@ -282,7 +282,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	
     	if($mp3Saver->hasUploaded()) {
     		$titel->setMp3($fileReference);
-    		$titel->setTName('inside if');
+    		$titel->setTName($fileReference);
     	}
     	
         $cd->addTitle($titel);
