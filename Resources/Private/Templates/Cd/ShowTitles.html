@@ -1,20 +1,26 @@
 <html lang="en" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 
 <h1>Titel der Cd: {cd.cdName} aus Libary {lib.bibName}</h1>
-<ol>
+<f:if condition="{cd.titles}">
+  <table>
+  <tr>
+  <th>Nummer</th><th>Name</th><th>L&auml;nge</th><th>Audio</th>
+  </tr>
     <f:for each="{cd.titles}" as="atitle" iteration="iterator">
-        <li>{atitle.tName},{atitle.laenge},
-        <!-- {atitle.mp3},{atitle.fullMp3Name.publicUrl}, -->
-         <audio controls>
+    	<tr>
+    	<td>{iterator.cycle}</td><td>{atitle.tName}</td><td>{atitle.laenge}</td>
+    	       <!-- {atitle.mp3},{atitle.fullMp3Name.publicUrl}, -->
+         <td><audio controls>
   <source src="{atitle.fullMp3Name}" type="audio/mpeg">
 Ihr Browser unsterst&uuml;tzt das Format nicht
-</audio> , {iterator.cycle}
-            <f:link.action action="deleteConfirmTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">l&ouml;schen</f:link.action>
-            <f:link.action action="editTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">bearbeiten</f:link.action>
+</audio></td>
+            <td><f:link.action action="deleteConfirmTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">l&ouml;schen</f:link.action></td>
+            <td><f:link.action action="editTitle" arguments="{libary:lib, cd : cd,titel:atitle}" class="btn btn-xs">bearbeiten</f:link.action></td>
 
-        </li>
+        </tr>
     </f:for>
-</ol>
+    </table>
+</f:if>
 
 
     <f:form action="addTitle" object="{titel}" method="post" enctype="multipart/form-data" name="titel" arguments="{libary:lib,cd:cd,titel:titel}" additionalAttributes="{role:'form'}">

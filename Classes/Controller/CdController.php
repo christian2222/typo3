@@ -165,6 +165,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$fileReference = $mp3Saver->uploadNew($libary->getBibName(),$cd->getCdName());
     	
     	$titel->setMp3($fileReference);
+    	//$titel->setLaenge($fileReference);
     	// refresh title of cd
         $cd->addTitle($titel);
         // refresh cd of libary
@@ -262,6 +263,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function updateTitleAction(\CDpackage\Cmcd\Domain\Model\Libary $libary, \CDpackage\Cmcd\Domain\Model\Cd $cd,
         \CDpackage\Cmcd\Domain\Model\Titel $titel)
     {
+    	$this->initializeUpdateTitleAction();
     	
     	/*
     	 *    	$mp3Saver = $this->objectManager->get('CDpackage\\Cmcd\\Services\\Mp3SavingService');
@@ -282,11 +284,11 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	$mp3Saver = $this->objectManager->get('CDpackage\\Cmcd\\Services\\Mp3SavingService');
     	 
     	$fileReference = $mp3Saver->reload($libary->getBibName(),$cd->getCdName());
-    	$titel->setLaenge($mp3Saver->getHelp());
+    	//$titel->setLaenge($mp3Saver->getHelp());
     	
     	if($mp3Saver->hasUploaded()) {
     		$titel->setMp3($fileReference);
-    		$titel->setTName($fileReference);
+    		//$titel->setTName($mp3Saver->getDebugX());
     	}
     	
         $cd->addTitle($titel);

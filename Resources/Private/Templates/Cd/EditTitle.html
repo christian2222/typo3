@@ -4,6 +4,7 @@ Titel der Cd {cd.cdName} der Bibliothek {lib.bibName} bearbeiten
 
 
 <div class="container">
+
     <f:form action="updateTitle" object="{titel}" method="post" enctype="multipart/form-data" name="titel" arguments="{libary:lib,cd:cd,titel:titel}" additionalAttributes="{role: 'form'}">
 
         <div class="form-group">
@@ -22,13 +23,14 @@ Titel der Cd {cd.cdName} der Bibliothek {lib.bibName} bearbeiten
 			Ihr Browser unsterst&uuml;tzt das Format nicht
 			</audio> 
         </div>
-
+<!-- does not work  (yet)
         <div class="form-group">
          	Datei &uuml;berschreiben
         	<input name="nochmal" type="file" accept="text/*" property="mp3"> 
         </div>
-
-        <f:form.submit value="Titel aendern" additionalAttributes="{libary:lib,cd:cd,titel:titel}" class="btn btn-primary" />
+ -->
+<!-- additionalAttributes="{libary:lib,cd:cd,titel:titel}" -->
+        <f:form.submit value="Titel aendern" class="btn btn-primary" />
         <f:link.action action="showTitles" arguments="{libary:lib, cd:cd,titel:titel}" class="btn btn-primary">Zur&uuml;ck zu Titel</f:link.action>
 
     </f:form>

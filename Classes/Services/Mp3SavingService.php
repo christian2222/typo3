@@ -17,6 +17,8 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	public $uploaded = false;
 	
 	public $help = 'help';
+	
+	public $debugX;
 
 	public function hasUploaded() {
 		return $this->uploaded;
@@ -24,6 +26,10 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	
 	public function getHelp() {
 		return $this->help;
+	}
+	
+	public function getDebugX() {
+		return $this->debugX;
 	}
 	
 	
@@ -209,7 +215,6 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 				$folder,
 				$newFilename,\TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE,FALSE
 				);
-		 
 		// TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference
 		// get the file reference
 		/** @var $fileReference \CDpackage\Cmcd\Domain\Model\FileReference */
@@ -218,7 +223,9 @@ class Mp3SavingService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		$fileReference->setFile($newFile);
 		//$fileReference->setOriginalResource($newFile);
 		 
+		 $this->debugX = $newFile->getNameWithoutExtension();
 		 
+		
 		return $fileReference;
 	}
 	
