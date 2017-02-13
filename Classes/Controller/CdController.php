@@ -288,6 +288,10 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	//$titel->setLaenge($mp3Saver->getHelp());
     	
     	if($mp3Saver->hasUploaded()) {
+    		$titel->clearMp3();
+    		//$this->fileReferenceRepository is NULL ?
+    		//$reference = $this->fileReferenceRepository->findByUid($this->mp3->getUid());
+    		//$this->fileReferenceRepository->remove($reference);
     		$titel->setMp3($fileReference);
     		//$titel->setTName($mp3Saver->getDebugX());
     	}

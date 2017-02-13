@@ -62,6 +62,17 @@ class Titel extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
   		return $fileResource->getPublicUrl(); 
     	//return $this->mp3->getOriginalRecource()->getName();
     }
+    
+    public function clearMp3() {
+    	if($this->mp3 !== null) {
+    		$fileRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\FileRepository::class);
+    		$fileReference = $fileRepository->findFileReferenceByUid($this->mp3->getUid());
+    		//$fileReference->delete(); // not yet implemented
+    		$fileRepository->remove($fileReference);
+    		$this->setMp3(null);
+    		
+    	}
+    }
     /**
      * Returns the tName
      *
