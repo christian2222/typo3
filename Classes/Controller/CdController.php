@@ -280,7 +280,8 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // redirect to showTitles with given $cd and $libary
         $this->redirect('showTitles','Cd',NULL,array('libary' => $libary,'cd' => $cd));
     	 */
-
+		//$titel->setMp3(null);
+		
     	$mp3Saver = $this->objectManager->get('CDpackage\\Cmcd\\Services\\Mp3SavingService');
     	 
     	$fileReference = $mp3Saver->reload($libary->getBibName(),$cd->getCdName());

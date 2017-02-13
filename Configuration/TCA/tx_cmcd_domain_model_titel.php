@@ -136,6 +136,8 @@ return array(
 		),
 		'mp3' => array(
 			'exclude' => 1,
+				'maxitems' => 1,
+				'maxItems' => 1,
 			'label' => 'LLL:EXT:cmcd/Resources/Private/Language/locallang_db.xlf:tx_cmcd_domain_model_titel.mp3',
 			'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
 				'mp3',
