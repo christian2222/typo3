@@ -51,6 +51,7 @@ class Titel extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * mp3
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     * @cascade remove
      */
     protected $mp3 = null;
     
@@ -65,9 +66,11 @@ class Titel extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     
     public function clearMp3() {
     	if($this->mp3 !== null) {
+    		// solution form http://lists.typo3.org/pipermail/typo3-dev/2014-April/048303.html does not work
     		$fileRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\FileRepository::class);
     		$fileReference = $fileRepository->findFileReferenceByUid($this->mp3->getUid());
     		//$fileReference->delete(); // not yet implemented
+    		// does not work
     		$fileRepository->remove($fileReference);
     		$this->setMp3(null);
     		
