@@ -143,7 +143,7 @@ return array(
 				'mp3',
 				array(
 					'appearance' => array(
-						'createNewRelationLinkTitle' => 'LLL:EXT:cms/locallang_ttc.xlf:media.addFileReference'
+						'createNewRelationLinkTitle' => 'LLL:EXT:fluid_styled_content/Resources/Private/Language/Database.xlf:tt_content.asset_references.addFileReference'
 					),
 					'foreign_types' => array(
 						'0' => array(

@@ -289,6 +289,7 @@ class CdController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	
     	if($mp3Saver->hasUploaded()) {
     		$titel->clearMp3();
+    		$this->objectManager->get('CDpackage\\Cmcd\\Domain\\Repository\\CdRepository')->update($cd);
     		//$this->fileReferenceRepository is NULL ?
     		//$reference = $this->fileReferenceRepository->findByUid($this->mp3->getUid());
     		//$this->fileReferenceRepository->remove($reference);
